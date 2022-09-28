@@ -84,10 +84,6 @@ s1 = PhotoImage(file=r"C:\Users\Mr.MadX\Desktop\icon\s1.png")
 playlist = Listbox(root,selectmode=SINGLE,bg='black',fg='green', selectbackground='gray', selectforeground= 'blue',font=('Comic Sans MS',17),width=40)
 playlist.pack(pady=20)
 
-# os.chdir(r'C:\Users\Mr.MadX\Desktop\Madx')
-# songs = os.listdir()
-# for s in songs:
-#     playlist.insert(END,s)
 
 #All frames
 ftframe = Frame(root)
