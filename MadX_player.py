@@ -27,7 +27,7 @@ def add_song():
     song = filedialog.askopenfilenames(initialdir=r'C:\Users\Mr.MadX\Desktop\Madx', title="ChooseA Song", filetypes=(("mp3 file","*mp3"), ))
 #Creating for loop to add multiple songs in one time
     for song in song:
-        song = song.replace("C:/Users/Mr.MadX/Desktop/Madx/", "")
+        song = song.replace("C:/", "")
         song = song.replace(".mp3","")
 #Insert songs in playlist
         playlist.insert(END, song)
@@ -115,7 +115,7 @@ pausebtn.grid(row=1,column=1,padx=5)
 stopbtn = Button(button_frm,image=s1, borderwidth=0, command=stopsong)
 stopbtn.grid(row=1,column=3)
 
-volslider =ttk.Scale(volframe, from_=1, to=0, orient='vertical', value=1, command=vol, length=100)
+volslider =ttk.Scale(volframe, from_=1, to=0, orient='vertical', value=0.5, command=vol, length=100)
 volslider.pack(padx=2)
 
 #Creating song timing status bar 
