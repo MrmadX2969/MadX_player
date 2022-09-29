@@ -106,23 +106,7 @@ s1 = PhotoImage(file=r"C:\Users\Mr.MadX\Desktop\icon\s1.png")
 
 #All buttons
 
-<<<<<<< HEAD
-playlist = Listbox(root,selectmode=SINGLE,bg='black',fg='green', selectbackground='gray', selectforeground= 'blue',font=('Comic Sans MS',17),width=40)
-playlist.pack(pady=20)
-
-
-#All frames
-ftframe = Frame(root)
-ftframe.pack()
-
-volframe = LabelFrame(ftframe,text='Vol')
-volframe.grid(row=1,column=4,padx=10) 
-
-
-playbtn = Button(ftframe,image = p1, borderwidth=0, command=playsong)
-=======
 playbtn = Button(button_frm,image = p1, borderwidth=0, command=playsong)
->>>>>>> master
 playbtn.grid(row=1,column=0,padx=5)
 
 pausebtn = Button(button_frm,image=p2, borderwidth=0, command= lambda: pause(paused))
@@ -131,7 +115,7 @@ pausebtn.grid(row=1,column=1,padx=5)
 stopbtn = Button(button_frm,image=s1, borderwidth=0, command=stopsong)
 stopbtn.grid(row=1,column=3)
 
-volslider =ttk.Scale(volframe, from_=1, to=0, orient='vertical', value=1, command=vol, length=100)
+volslider =ttk.Scale(volframe, from_=1, to=0, orient='vertical', value=0.5, command=vol, length=100)
 volslider.pack(padx=2)
 
 #Creating song timing status bar 
