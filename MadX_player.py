@@ -1,5 +1,6 @@
 from cProfile import label
 from email.mime import image
+from math import fabs
 from tkinter import ttk
 import pygame
 from pygame import mixer
@@ -21,12 +22,15 @@ def song_duration():
  
     status_bar.after(1000, song_duration)
 
+# Add manny songs to the playlist
 def add_song():
-    song = filedialog.askopenfilename(initialdir=r'C:\Users\Mr.MadX\Desktop\Madx', title="ChooseA Song", filetypes=(("mp3 file","*mp3"), ))
-    song = song.replace("C:/Users/Mr.MadX/Desktop/Madx/", "")
-    song = song.replace(".mp3","")
-
-    playlist.insert(END, song)
+    song = filedialog.askopenfilenames(initialdir=r'C:\Users\Mr.MadX\Desktop\Madx', title="ChooseA Song", filetypes=(("mp3 file","*mp3"), ))
+#Creating for loop to add multiple songs in one time
+    for song in song:
+        song = song.replace("C:/Users/Mr.MadX/Desktop/Madx/", "")
+        song = song.replace(".mp3","")
+#Insert songs in playlist
+        playlist.insert(END, song)
 
 #Play function
 
@@ -40,18 +44,22 @@ def playsong():
 
     song_duration()
 
-#Pause function
+#Creating gloabal pause variable
+global paused
+paused = False
 
-def pausesong():
-    songstatus.set("Paused")
-    mixer.music.pause()
+#Pause/ Unpause function in one button
 
-#Resume function
-
-def resumesong():
-    songstatus.set("Resuming")
-    mixer.music.unpause()
-
+def pause(is_paused):
+    global paused
+    paused = is_paused
+    if paused:
+        mixer.music.unpause()
+        paused = False
+    else:
+        mixer.music.pause()
+        paused = True
+  
 #Stop function
 
 def stopsong():
@@ -62,25 +70,43 @@ def stopsong():
 #Volume control function
 
 def vol(x):
-    pygame.mixer.music.set_volume(volslider.get())
+    mixer.music.set_volume(volslider.get())
 
 
+#All frames
+
+#Root frame
 root = Tk()
 root.title("MadX Player")
 root.geometry()
+
+#Play List Layout
+
+playlist = Listbox(root,selectmode=SINGLE,bg='black',fg='green', selectbackground='gray', selectforeground= 'blue',font=('Comic Sans MS',17),width=40)
+playlist.pack(pady=20)
+
+#Button frame
+button_frm = Frame(root)
+button_frm.pack()
+
+#Volume outline frame
+volframe = LabelFrame(button_frm,text='Vol')
+volframe.grid(row=1,column=4,padx=10)
 
 mixer.init()
 songstatus = StringVar()
 songstatus.set("Choosing")
 
+
+
 #Define icon and images
 p1 = PhotoImage(file=r"C:\Users\Mr.MadX\Desktop\icon\p1.png")
 p2 = PhotoImage(file=r"C:\Users\Mr.MadX\Desktop\icon\p2.png")
-r1 = PhotoImage(file=r"C:\Users\Mr.MadX\Desktop\icon\r1.png")
 s1 = PhotoImage(file=r"C:\Users\Mr.MadX\Desktop\icon\s1.png")
 
-#Play List------------------------
+#All buttons
 
+<<<<<<< HEAD
 playlist = Listbox(root,selectmode=SINGLE,bg='black',fg='green', selectbackground='gray', selectforeground= 'blue',font=('Comic Sans MS',17),width=40)
 playlist.pack(pady=20)
 
@@ -94,21 +120,21 @@ volframe.grid(row=1,column=4,padx=10)
 
 
 playbtn = Button(ftframe,image = p1, borderwidth=0, command=playsong)
+=======
+playbtn = Button(button_frm,image = p1, borderwidth=0, command=playsong)
+>>>>>>> master
 playbtn.grid(row=1,column=0,padx=5)
 
-pausebtn = Button(ftframe,image=p2, borderwidth=0, command=pausesong)
+pausebtn = Button(button_frm,image=p2, borderwidth=0, command= lambda: pause(paused))
 pausebtn.grid(row=1,column=1,padx=5)
 
-resumebtn = Button(ftframe,image=r1, borderwidth=0, command=resumesong)
-resumebtn.grid(row=1,column=2,padx=5)
-
-stopbtn = Button(ftframe,image=s1, borderwidth=0, command=stopsong)
+stopbtn = Button(button_frm,image=s1, borderwidth=0, command=stopsong)
 stopbtn.grid(row=1,column=3)
 
 volslider =ttk.Scale(volframe, from_=1, to=0, orient='vertical', value=1, command=vol, length=100)
 volslider.pack(padx=2)
 
-# create status bar 
+#Creating song timing status bar 
 status_bar = Label(root,text='',bd=1, relief=GROOVE, anchor=SE)
 status_bar.pack(fill=X, side=BOTTOM, ipady=2)
 
@@ -116,10 +142,10 @@ status_bar.pack(fill=X, side=BOTTOM, ipady=2)
 my_menu =Menu(root)
 root.config(menu=my_menu)
 
-#+ Add song menu
+# + Add song menu
 add_song_menu = Menu(my_menu)
-my_menu.add_cascade(label="Add Songs", menu=add_song_menu)
-add_song_menu.add_command(label="Add one song to playlist", command=add_song)
+my_menu.add_cascade(label="Menu", menu=add_song_menu)
+add_song_menu.add_command(label="Add songs to playlist", command=add_song)
 
 
 mainloop()
